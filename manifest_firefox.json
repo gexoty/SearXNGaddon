@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.6",
+  "default_locale": "en",
+  "icons": {
+    "128": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "your-extension-id@example.com"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["data.json"],
+    "matches": ["<all_urls>"]
+  }]
+}
