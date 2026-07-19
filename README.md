@@ -1,22 +1,18 @@
-# 🔍 SearXNG Search & New Tab
+# 🔍 SearXNG Search & New Tab Customizable
 
-**🇷🇺 Русский | [🇺🇸 English](README_EN.md)**
+### Является форком оригинального [SearXNG Search & New Tab](https://github.com/IriyaMitsuki/SearXNGaddon)
 
-Элегантное расширение для Chrome, которое заменяет стандартную поисковую систему и страницу новой вкладки на приватный поиск SearXNG.
+Элегантное расширение для Chrome, которое заменяет стандартную поисковую систему и страницу новой вкладки с кастомизацией на приватный поиск SearXNG.
 
-![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)
-![Privacy](https://img.shields.io/badge/Privacy-Focused-00C851?style=for-the-badge&logo=shield&logoColor=white)
-![Open Source](https://img.shields.io/badge/Open-Source-FF6B35?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
+## 📸 Скриншоты
 
-## 📸 Скриншот
-
-![Новая вкладка SearXNG](https://raw.githubusercontent.com/IriyaMitsuki/SearXNGaddon/refs/heads/main/screen.png)
+![Новая вкладка SearXNG](screenshot1.png)
 
 ## ✨ Особенности
 
-- 🔒 **Приватный поиск** - Использует [search.oh64.moe](https:/search.oh64.moe/), один из надежных инстансов [SearXNG](https://searx.space/)
+- 🔒 **Приватный поиск** - Использует [search.hfox.app](https:/search.hfox.app/) в качестве поисковой системы (один из инстансов SearXNG)
 - 🎨 **Красивая новая вкладка** - Минималистичный дизайн с живыми часами и приветствием
-- ⚡ **Быстрые ссылки** - Мгновенный доступ к популярным сервисам
+- ⚡ **Быстрые ссылки** - Мгновенный доступ к популярным сервисам с возможностью кастомизации
 - 🌙 **Темная тема** - Приятная для глаз цветовая схема Catppuccin
 - 🚀 **Легкий и быстрый** - Минимальное потребление ресурсов
 
@@ -38,8 +34,6 @@
 
 ## 🚀 Установка
 
-### Из Chrome Web Store
-*Скоро будет доступно*
 
 ### Ручная установка
 1. Скачайте или клонируйте этот репозиторий
@@ -56,34 +50,24 @@
 SearXNGaddon/
 ├── manifest.json      # Конфигурация расширения
 ├── index.html         # Страница новой вкладки
+├── style.css          # Стили
 ├── script.js          # Логика часов и приветствий
 ├── icon.png           # Иконка расширения
 ├── LICENSE            # MIT Лицензия
-├── README.md          # Русская документация
-└── README_EN.md       # Английская документация
 └── README.md          # Документация
 ```
 
-### Используемые технологии
-- **Manifest V3** - Современный стандарт расширений Chrome
-- **Vanilla JavaScript** - Без внешних зависимостей
-- **CSS Custom Properties** - Для темизации
-- **Catppuccin Color Scheme** - Приятная темная тема
-
 ### SearXNG Instance
-Расширение использует **[search.oh64.moe](https://search.oh64.moe/)** - один из стабильных и быстрых инстансов SearXNG из списка [searx.space](https://searx.space/). Этот инстанс выбран за:
-- Высокую доступность
-- Быструю скорость ответа
-- Стабильную работу
-- Поддержку HTTPS
+Расширение использует **[search.hfox.app](https://search.hfox.app/)** - один из инстансов SearXNG
 
 ## 🎨 Скриншоты
 
 ### Новая вкладка
 Элегантный интерфейс с живыми часами и быстрыми ссылками
-
-### Поиск
-Приватный поиск без отслеживания через SearXNG
+![Новая вкладка SearXNG](screenshot1.png)
+### Боковые панели
+![Новая вкладка SearXNG](screenshot3.png)
+![Новая вкладка SearXNG](screenshot4.png)
 
 ## 🔧 Настройка
 
@@ -94,17 +78,9 @@ SearXNGaddon/
 2. Найдите секцию `chrome_settings_overrides`
 3. Измените `search_url` на желаемый инстанс из [searx.space](https://searx.space/)
 
-### Кастомизация быстрых ссылок
-В файле `index.html` найдите секцию `#quick-links` и измените ссылки по своему вкусу.
-
-## 🤝 Вклад в проект
-
-Мы приветствуем вклад в развитие проекта! Вы можете:
-
-- 🐛 Сообщить об ошибке
-- 💡 Предложить новую функцию
-- 🔧 Отправить Pull Request
-- 📖 Улучшить документацию
+### Кастомизация быстрых ссылок и интерфейса
+Кастомизация доступна прямо в интерфейсе через настройки. Сохранение производится в localStorage браузера, а так же имеется возможность экспортировать и импортировать ваши текущие настройки
+![Новая вкладка SearXNG](screenshot2.png)
 
 ## 📄 Лицензия
 
@@ -116,6 +92,7 @@ SearXNGaddon/
 - [searx.space](https://searx.space/) - За мониторинг инстансов SearXNG
 - [Catppuccin](https://catppuccin.com/) - За прекрасную цветовую схему
 - [Lucide](https://lucide.dev/) - За красивые иконки
+- [IriyaMitsuki](https://github.com/IriyaMitsuki) - За оригинальный проект
 
 ---
 
