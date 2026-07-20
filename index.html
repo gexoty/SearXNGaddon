@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">New Tab</title>
+    <title id="page-title">Домашняя страница</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main>
         <time id="clock">00:00:00</time>
-        <h1 id="greeting">Hello</h1>
+        <h1 id="greeting">Привет</h1>
         <form action="https://search.hfox.app/search" method="get" class="search-form">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" name="q" class="search-input" id="search-input" placeholder="Search with SearXNG..." autofocus autocomplete="off">
+            <input type="text" name="q" class="search-input" id="search-input" placeholder="Поиск в SearXNG..." autofocus autocomplete="off">
         </form>
         <section id="quick-links">
             <nav id="center-links-container"></nav>
@@ -32,7 +32,7 @@
         <div class="services-grid" id="right-links-container"></div>
     </aside>
 
-    <button id="settings-toggle" aria-label="Settings">
+    <button id="settings-toggle" aria-label="Настройки">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
 
@@ -40,63 +40,93 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="settings-title-text">Настройки</h2>
-                <button id="btn-close" class="close-top-btn" aria-label="Close modal">✕</button>
+                <button id="btn-close" class="close-top-btn" aria-label="Закрыть модальное окно">✕</button>
             </div>
             
-            <div class="modal-grid">
-                <div class="modal-column">
-                    <div class="setting-item">
-                        <label for="username-input" id="label-username">Имя для приветствия:</label>
-                        <input type="text" id="username-input" class="search-input font-fix">
-                    </div>
-
-                    <div class="setting-item">
-                        <label for="bg-img-input" id="label-bg">URL фонового изображения (опционально):</label>
-                        <input type="text" id="bg-img-input" class="search-input font-fix" placeholder="https://...">
-                    </div>
-
-                    <div class="setting-item colors">
-                        <label id="label-colors">Цвета темы:</label>
-                        <div class="color-pickers">
-                            <div><input type="color" id="color-bg"> <span class="color-name">Background</span></div>
-                            <div><input type="color" id="color-surface"> <span class="color-name">Surface</span></div>
-                            <div><input type="color" id="color-text"> <span class="color-name">Text</span></div>
-                            <div><input type="color" id="color-accent"> <span class="color-name">Accent</span></div>
-                        </div>
-                    </div>
-                    
-                    <div class="modal-actions border-top">
-                        <button id="btn-export" class="settings-btn">Экспорт настроек</button>
-                        <button id="btn-import" class="settings-btn">Импорт настроек</button>
-                        <button id="btn-reset" class="settings-btn reset">Сброс по умолчанию</button>
-                    </div>
+            <div class="modal-tabs-layout">
+                <div class="modal-tabs">
+                    <button class="tab-btn active" data-tab="tab-appearance">Внешний вид</button>
+                    <button class="tab-btn" data-tab="tab-links">Менеджер ссылок</button>
+                    <button class="tab-btn" data-tab="tab-advanced">Дополнительно</button>
                 </div>
 
-                <div class="modal-column dynamic-links-manager">
-                    <h3 class="section-subtitle">Менеджер ссылок и кнопок</h3>
-                    <div class="add-link-form">
-                        <input type="hidden" id="edit-link-index" value="-1">
-                        <div class="form-row">
-                            <input type="text" id="link-name-input" class="search-input font-fix" placeholder="Название (например: GitHub)">
-                            <select id="link-zone-select" class="zone-selector">
-                                <option value="center">Центр (Быстрые)</option>
-                                <option value="left">Левая панель</option>
-                                <option value="right">Правая панель</option>
+                <div class="modal-tab-content">
+                    <div id="tab-appearance" class="tab-content active">
+                        <div class="setting-item">
+                            <label for="username-input" id="label-username">Имя для приветствия:</label>
+                            <input type="text" id="username-input" class="search-input font-fix">
+                        </div>
+
+                        <div class="setting-item">
+                            <label for="bg-img-input" id="label-bg">URL фонового изображения (опционально):</label>
+                            <input type="text" id="bg-img-input" class="search-input font-fix" placeholder="https://...">
+                        </div>
+
+                        <div class="setting-item" id="blur-container">
+                            <label for="bg-blur-input">Размытие заднего фона: <span id="blur-value">0px</span></label>
+                            <input type="range" id="bg-blur-input" min="0" max="20" step="1" value="0" style="width: 100%; accent-color: var(--accent);">
+                        </div>
+
+                        <div class="setting-item" id="preset-selector-wrapper" style="display: none;">
+                            <label for="preset-select">Готовые цветовые пресеты:</label>
+                            <select id="preset-select" class="zone-selector" style="flex: none; width: 100%;">
+                                <option value="">-- Выберите пресет --</option>
                             </select>
                         </div>
-                        <input type="text" id="link-url-input" class="search-input font-fix" placeholder="URL ссылки (https://...)">
-                        <div class="svg-input-wrapper">
-                            <textarea id="link-svg-input" class="search-input font-fix textarea-svg" placeholder='Код SVG иконки. Например: <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>'></textarea>
-                            <small class="hint-text">Ищите иконки на <a href="https://lucide.dev" target="_blank" rel="noopener noreferrer">lucide.dev</a>. Копируйте теги внутри &lt;svg&gt; или весь SVG целиком.</small>
+
+                        <div class="setting-item colors">
+                            <label id="label-colors">Кастомные цвета темы:</label>
+                            <div class="color-pickers">
+                                <div><input type="color" id="color-bg"> <span class="color-name">Фон</span></div>
+                                <div><input type="color" id="color-surface"> <span class="color-name">Панели</span></div>
+                                <div><input type="color" id="color-text"> <span class="color-name">Текст</span></div>
+                                <div><input type="color" id="color-accent"> <span class="color-name">Акцент</span></div>
+                            </div>
                         </div>
-                        <button id="btn-add-link" class="settings-btn primary-btn">Сохранить ссылку</button>
                     </div>
 
-                    <div class="links-list-wrapper">
-                        <label style="font-weight: 500; font-size: 0.9rem;">Существующие ссылки в выбранной зоне:</label>
-                        <div id="links-editor-list">
+                    <div id="tab-links" class="tab-content">
+                        <div class="dynamic-links-manager">
+                            <h3 class="section-subtitle">Добавить / Редактировать ссылку</h3>
+                            <div class="add-link-form">
+                                <input type="hidden" id="edit-link-index" value="-1">
+                                <div class="form-row">
+                                    <input type="text" id="link-name-input" class="search-input font-fix" placeholder="Название (например: GitHub)">
+                                    <select id="link-zone-select" class="zone-selector">
+                                        <option value="center">Центр (Быстрые)</option>
+                                        <option value="left">Левая панель</option>
+                                        <option value="right">Правая панель</option>
+                                    </select>
+                                </div>
+                                <input type="text" id="link-url-input" class="search-input font-fix" placeholder="URL ссылки (https://...)">
+                                <div class="svg-input-wrapper">
+                                    <textarea id="link-svg-input" class="search-input font-fix textarea-svg" placeholder='Код SVG иконки. Например: <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>'></textarea>
+                                    <small class="hint-text">Ищите иконки на <a href="https://lucide.dev" target="_blank" rel="noopener noreferrer">lucide.dev</a>. Копируйте теги внутри &lt;svg&gt; или весь SVG целиком.</small>
+                                </div>
+                                <button id="btn-add-link" class="settings-btn primary-btn">Сохранить ссылку</button>
+                            </div>
+
+                            <div class="links-list-wrapper">
+                                <label style="font-weight: 500; font-size: 0.9rem; margin-top: 10px; display: block;">Существующие ссылки в выбранной зоне:</label>
+                                <div id="links-editor-list"></div>
+                            </div>
                         </div>
                     </div>
+
+                    <div id="tab-advanced" class="tab-content">
+                        <h3 class="section-subtitle" style="margin-bottom: 10px;">Управление данными конфигурации</h3>
+                        <p style="color: var(--subtext); font-size: 0.95rem; margin-bottom: 20px;">
+                            Здесь вы можете сохранить свои настройки и ссылки в файл на компьютере или восстановить их из ранее сохраненного бэкапа.
+                        </p>
+                        <div class="advanced-actions-grid">
+                            <button id="btn-export" class="settings-btn">Экспорт настроек (.json)</button>
+                            <button id="btn-import" class="settings-btn">Импорт настроек (.json)</button>
+                            <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+                                <button id="btn-reset" class="settings-btn reset" style="width: 100%;">Сброс всех настроек по умолчанию</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

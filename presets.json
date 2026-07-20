@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Default",
+    "background": "#24273a",
+    "surface": "#363a4f",
+    "text": "#cad3f5",
+    "accent": "#9a87ed"
+  },
+  {
+    "name": "Absolute Black",
+    "background": "#1f1f1f",
+    "surface": "#000000",
+    "text": "#d9d9d9",
+    "accent": "#ababab"
+  },
+  {
+    "name": "Gruvbox Dark",
+    "background": "#1d202f",
+    "surface": "#212430",
+    "text": "#ccd8f5",
+    "accent": "#879ced"
+  },
+  {
+    "name": "Red Dark",
+    "background": "#0e0c0c",
+    "surface": "#1c1717",
+    "text": "#ecb6b6",
+    "accent": "#b23838"
+  },
+  {
+    "name": "Orange Dark",
+    "background": "#282828",
+    "surface": "#3c3836",
+    "text": "#ebdbb2",
+    "accent": "#fe8019"
+  }
+]

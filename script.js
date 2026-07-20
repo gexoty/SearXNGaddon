@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const clock = document.getElementById('clock');
     const greeting = document.getElementById('greeting');
-    const input = document.getElementById('search-input');
-    const panelTitleText = document.getElementById('panel-title-text');
     const centerContainer = document.getElementById('center-links-container');
     const leftContainer = document.getElementById('left-links-container');
     const rightContainer = document.getElementById('right-links-container');
@@ -16,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const importFile = document.getElementById('import-file');
     const usernameInput = document.getElementById('username-input');
     const bgImgInput = document.getElementById('bg-img-input');
+    const bgBlurInput = document.getElementById('bg-blur-input');
+    const blurValueDisplay = document.getElementById('blur-value');
     const editLinkIndex = document.getElementById('edit-link-index');
     const linkNameInput = document.getElementById('link-name-input');
     const linkUrlInput = document.getElementById('link-url-input');
@@ -26,12 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const colorSurface = document.getElementById('color-surface');
     const colorText = document.getElementById('color-text');
     const colorAccent = document.getElementById('color-accent');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const presetSelect = document.getElementById('preset-select');
+    const presetWrapper = document.getElementById('preset-selector-wrapper');
 
     const defaultSvgInner = `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>`;
 
     const defaultSettings = {
         username: '',
         bgImage: '',
+        bgBlur: 0,
         colors: {
             background: '#24273a',
             surface: '#363a4f',
@@ -58,36 +63,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!userSettings.links) userSettings.links = JSON.parse(JSON.stringify(defaultSettings.links));
     if (userSettings.bgImage === undefined) userSettings.bgImage = '';
+    if (userSettings.bgBlur === undefined) userSettings.bgBlur = 0;
 
-    function getLocale() {
-        return (navigator.language || 'en').startsWith('ru') ? 'ru' : 'en';
+    let loadedPresets = [];
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            const targetTab = btn.getAttribute('data-tab');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+
+    async function loadPresetsFile() {
+        try {
+            const response = await fetch('presets.json');
+            if (!response.ok) return; 
+            const presets = await response.json();
+            
+            if (Array.isArray(presets) && presets.length > 0) {
+                loadedPresets = presets;
+                presetWrapper.style.display = 'flex';
+                presetSelect.innerHTML = '<option value="">-- Выберите пресет --</option>';
+                presets.forEach((preset, index) => {
+                    const opt = document.createElement('option');
+                    opt.value = index;
+                    opt.textContent = preset.name;
+                    presetSelect.appendChild(opt);
+                });
+            }
+        } catch (e) {
+            console.log("Локальный файл пресетов пуст или отсутствует. Используются базовые настройки.");
+        }
     }
 
-    const translations = {
-        ru: {
-            title: 'Домашняя страница', placeholder: 'Поиск в SearXNG...',
-            morning: 'Доброе утро {name}', day: 'Добрый день {name}',
-            evening: 'Добрый вечер {name}', night: 'Доброй ночи {name}',
-            panelTitle: 'Быстрые ссылки', settingsTitle: 'Настройки',
-            labelUsername: 'Имя для приветствия:', labelColors: 'Цвета темы:', defaultName: ''
-        },
-        en: {
-            title: 'New Tab', placeholder: 'Search...',
-            morning: 'Good morning {name}', day: 'Good afternoon {name}',
-            evening: 'Good evening {name}', night: 'Good night {name}',
-            panelTitle: 'Control Panels', settingsTitle: 'Settings',
-            labelUsername: 'Greeting Name:', labelColors: 'Theme Colors:', defaultName: ''
+    presetSelect.addEventListener('change', (e) => {
+        const selectedIdx = e.target.value;
+        if (selectedIdx === "") return;
+
+        const preset = loadedPresets[selectedIdx];
+        if (preset) {
+            userSettings.colors.background = preset.background;
+            userSettings.colors.surface = preset.surface;
+            userSettings.colors.text = preset.text;
+            userSettings.colors.accent = preset.accent;
+            
+            saveSettings();
+            applySettings();
         }
-    };
-
-    const t = translations[getLocale()];
-
-    document.title = t.title;
-    input.placeholder = t.placeholder;
-    if (panelTitleText) panelTitleText.textContent = t.panelTitle;
-    document.getElementById('settings-title-text').textContent = t.settingsTitle;
-    document.getElementById('label-username').textContent = t.labelUsername;
-    document.getElementById('label-colors').textContent = t.labelColors;
+    });
 
     function buildSvgMarkup(customSvgSource) {
         const raw = customSvgSource ? customSvgSource.trim() : '';
@@ -204,15 +231,19 @@ document.addEventListener('DOMContentLoaded', () => {
         
         usernameInput.value = userSettings.username;
         bgImgInput.value = userSettings.bgImage || '';
+        bgBlurInput.value = userSettings.bgBlur;
+        blurValueDisplay.textContent = `${userSettings.bgBlur}px`;
         
         if (userSettings.bgImage.trim()) {
             document.body.style.backgroundImage = `url('${userSettings.bgImage.trim()}')`;
             document.body.style.backgroundSize = 'cover';
             document.body.style.backgroundPosition = 'center';
+            document.body.style.backdropFilter = `blur(${userSettings.bgBlur}px)`;
+            document.body.style.filter = `blur(0px)`; 
         } else {
             document.body.style.backgroundImage = 'none';
+            document.body.style.backdropFilter = 'none';
         }
-
         colorBg.value = userSettings.colors.background;
         colorSurface.value = userSettings.colors.surface;
         colorText.value = userSettings.colors.text;
@@ -236,15 +267,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setGreeting() {
         const h = new Date().getHours();
-        const name = userSettings.username.trim() || t.defaultName;
+        const name = userSettings.username.trim();
+        const nameSuffix = name ? ` ${name}` : '';
         let greetStr = '';
 
-        if (h < 5) greetStr = t.night;
-        else if (h < 12) greetStr = t.morning;
-        else if (h < 18) greetStr = t.day;
-        else greetStr = t.evening;
+        if (h < 5) greetStr = `Доброй ночи${nameSuffix}`;
+        else if (h < 12) greetStr = `Доброе утро${nameSuffix}`;
+        else if (h < 18) greetStr = `Добрый день${nameSuffix}`;
+        else greetStr = `Добрый вечер${nameSuffix}`;
 
-        greeting.textContent = greetStr.replace('{name}', name);
+        greeting.textContent = greetStr;
     }
 
     linkZoneSelect.addEventListener('change', () => {
@@ -278,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     settingsToggle.addEventListener('click', () => {
         settingsModal.classList.add('open');
+        tabButtons[0].click();
         resetLinkForm();
         renderSettingsLinksEditor();
     });
@@ -300,8 +333,18 @@ document.addEventListener('DOMContentLoaded', () => {
         applySettings();
     });
 
+    bgBlurInput.addEventListener('input', (e) => {
+        userSettings.bgBlur = parseInt(e.target.value, 10);
+        blurValueDisplay.textContent = `${userSettings.bgBlur}px`;
+        saveSettings();
+        if (userSettings.bgImage.trim()) {
+            document.body.style.backdropFilter = `blur(${userSettings.bgBlur}px)`;
+        }
+    });
+
     const handleColorChange = (key, e) => {
         userSettings.colors[key] = e.target.value;
+        presetSelect.value = "";
         saveSettings();
         applySettings();
     };
@@ -318,6 +361,8 @@ document.addEventListener('DOMContentLoaded', () => {
             applySettings();
             resetLinkForm();
             renderSettingsLinksEditor();
+            presetSelect.value = "";
+            settingsModal.classList.remove('open');
         }
     });
 
@@ -343,11 +388,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const parsed = JSON.parse(event.target.result);
                 if (parsed.colors && parsed.links) {
                     userSettings = parsed;
+                    if (userSettings.bgBlur === undefined) userSettings.bgBlur = 0;
                     saveSettings();
                     applySettings();
                     resetLinkForm();
-                    renderSettingsLinksEditor();
+                    presetSelect.value = "";
                     alert('Настройки и ссылки успешно импортированы!');
+                    settingsModal.classList.remove('open');
                 } else {
                     alert('Неверный формат файла конфигурации.');
                 }
@@ -361,4 +408,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 500);
     updateClock();
     applySettings();
+    loadPresetsFile();
 });

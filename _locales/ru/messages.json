@@ -10,20 +10,5 @@
   },
   "searchPlaceholder": {
     "message": "Поиск в SearXNG..."
-  },
-  "greetingDefault": {
-    "message": "Здравствуйте"
-  },
-  "greetingNight": {
-    "message": "Доброй ночи"
-  },
-  "greetingMorning": {
-    "message": "Доброе утро"
-  },
-  "greetingAfternoon": {
-    "message": "Добрый день"
-  },
-  "greetingEvening": {
-    "message": "Добрый вечер"
   }
 }
