@@ -33,5 +33,12 @@
     "surface": "#3c3836",
     "text": "#ebdbb2",
     "accent": "#fe8019"
+  },
+  {
+    "name": "Purple Dark",
+    "background": "#2d2338",
+    "surface": "#140d1c",
+    "text": "#c09eff",
+    "accent": "#8b4ed4"
   }
 ]
